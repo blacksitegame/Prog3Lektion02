@@ -85,6 +85,43 @@ public class BST<E> implements Tree<E> {
         return new TreeNode<>(e);
     }
 
+    public boolean isLeaf(TreeNode<E> treeNode){
+        return treeNode.left == null && treeNode.right == null;
+    }
+
+    public boolean isInternal(TreeNode<E> treeNode){
+        return treeNode.left != null || treeNode.right != null;
+    }
+
+    public int height(){
+        ArrayList<E> arrayList = new ArrayList<>();
+        int height = 0;
+        int temp = 0;
+        TreeNode<E> current = root;
+        while (current != null){
+            if (current.left == null && current.right == null && !arrayList.contains(current.element)){
+                arrayList.add(current.element);
+                delete(current.element);
+                temp++;
+                if (temp>height){
+                    height = temp;
+                }
+                temp = 0;
+                if (current == root){
+                    current = null;
+                }
+
+            } else if (current.left != null){
+                current = current.left;
+                temp++;
+            } else {
+                current = current.right;
+                temp++;
+            }
+        }
+        return height;
+    }
+
     @Override
     /** Inorder traversal from the root */
     public ArrayList<E> inorder() {
@@ -107,7 +144,46 @@ public class BST<E> implements Tree<E> {
         return arrayList;
     }
 
+    public int sum() {
+        return sumHelper(root);
+    }
 
+    public int findMax() {
+        int max = 0;
+        TreeNode<E> current = root;
+        while (current != null){
+            if (current.right != null){
+                current = current.right;
+            } else {
+                max = (Integer) current.element;
+                current=null;
+            }
+        }
+
+        return max;
+    }
+
+    public int findMin(){
+        int min = 0;
+        TreeNode<E> current = root;
+        while (current != null){
+            if (current.left != null){
+                current = current.left;
+            } else {
+                min = (Integer) current.element;
+                current=null;
+            }
+        }
+
+        return min;
+    }
+
+
+
+    private int sumHelper(TreeNode<E> node) {
+        if (node == null) return 0;
+        return (Integer) node.element + sumHelper(node.left) + sumHelper(node.right);
+    }
 
     @Override
     /** Postorder traversal from the root */
