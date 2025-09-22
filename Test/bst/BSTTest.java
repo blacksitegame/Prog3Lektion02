@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -188,5 +189,38 @@ class BSTTest {
         //Assert
         assertEquals(expected,actual);
 
+    }
+
+    @Test
+    void greaterThan(){
+        //Arrange
+        ArrayList<Integer> actual = integerBST.greaterThan(50);
+        //Act
+        ArrayList<Integer> expected = new ArrayList<>(Arrays.asList(77, 90, 88));
+        //Assert
+        assertEquals(expected.size(), actual.size());
+        for (Integer element : expected) {
+            assertTrue(actual.contains(element));
+        }
+    }
+
+    @Test
+    void numberOfLeaves() {
+        //Arrange
+        int actual = integerBST.numberOfLeaves();
+        //Act
+        int expected = 3; // Leaves: 15, 25, 88
+        //Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void heightNodeCount() {
+        //Arrange & Act & Assert
+        assertEquals(1, integerBST.heightNodeCount(0)); // Root: 45
+        assertEquals(2, integerBST.heightNodeCount(1)); // Level 1: 22, 77
+        assertEquals(3, integerBST.heightNodeCount(2)); // Level 2: 11, 30, 90
+        assertEquals(3, integerBST.heightNodeCount(3)); // Level 3: 15, 25, 88
+        assertEquals(0, integerBST.heightNodeCount(4)); // Level 4: no nodes
     }
 }

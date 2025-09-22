@@ -1,5 +1,6 @@
 package bst;
 
+import javax.swing.text.html.parser.Element;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -319,14 +320,25 @@ public class BST<E> implements Tree<E> {
     }
 
     public E removeMin(){
-        TreeNode<E> current = root;
-        E result;
-        while (current.left != null){
-            current = current.left;
+        if (root == null) return null;
 
+        TreeNode<E> parent = null;
+        TreeNode<E> current = root;
+
+        while (current.left != null){
+            parent = current;
+            current = current.left;
         }
-        result = current.element;
-        current.element = null;
+
+        E result = current.element;
+
+        if (parent == null) {
+            root = current.right;
+        } else {
+            parent.left = current.right;
+        }
+
+        size--;
         return result;
     }
 
@@ -343,6 +355,43 @@ public class BST<E> implements Tree<E> {
         return result;
     }
 
+    public ArrayList<E> greaterThan(E element){
+        ArrayList<E> result = new ArrayList<>();
+        greaterThanHelper(root, element, result);
+        return result;
+    }
+
+    private void greaterThanHelper(TreeNode<E> node, E element, ArrayList<E> result) {
+        if (node == null) return;
+
+        if (c.compare(node.element, element) > 0) {
+            result.add(node.element);
+        }
+
+        greaterThanHelper(node.left, element, result);
+        greaterThanHelper(node.right, element, result);
+    }
+
+    public int numberOfLeaves() {
+        return countLeaves(root);
+    }
+
+    private int countLeaves(TreeNode<E> node) {
+        if (node == null) return 0;
+        if (node.left == null && node.right == null) return 1;
+        return countLeaves(node.left) + countLeaves(node.right);
+    }
+
+    public int heightNodeCount(int targetHeight) {
+        return countNodesAtHeight(root, 0, targetHeight);
+    }
+
+    private int countNodesAtHeight(TreeNode<E> node, int currentHeight, int targetHeight) {
+        if (node == null) return 0;
+        if (currentHeight == targetHeight) return 1;
+        return countNodesAtHeight(node.left, currentHeight + 1, targetHeight) +
+               countNodesAtHeight(node.right, currentHeight + 1, targetHeight);
+    }
 //
     //-------------------------------------------------------------------
 
