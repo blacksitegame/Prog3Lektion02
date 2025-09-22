@@ -318,6 +318,31 @@ public class BST<E> implements Tree<E> {
         return found; // Element deleted successfully
     }
 
+    public E removeMin(){
+        TreeNode<E> current = root;
+        E result;
+        while (current.left != null){
+            current = current.left;
+
+        }
+        result = current.element;
+        current.element = null;
+        return result;
+    }
+
+
+    public E removeMax(){
+        TreeNode<E> current = root;
+        E result;
+        while (current.right != null){
+            current = current.right;
+
+        }
+        result = current.element;
+        current.element = null;
+        return result;
+    }
+
 //
     //-------------------------------------------------------------------
 

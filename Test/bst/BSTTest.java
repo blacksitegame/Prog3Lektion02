@@ -160,4 +160,33 @@ class BSTTest {
         //Assert
         assertEquals(expected,actual);
     }
+
+    @Test
+    void removeMin() {
+        //Arrange
+        int actual = integerBST.removeMin();
+        //Act
+        int expected = 11;
+        //Assert
+        assertEquals(expected,actual);
+
+        //arrange
+        int actual2 = integerBST.removeMin();
+        //Act
+        int expected2 = 15;
+        //Assert
+        assertEquals(expected2,actual2);
+
+    }
+
+    @Test
+    void removeMax() {
+        //Arrange
+        int actual = integerBST.removeMax();
+        //Act
+        int expected = 90;
+        //Assert
+        assertEquals(expected,actual);
+
+    }
 }
